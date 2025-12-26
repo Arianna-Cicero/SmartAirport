@@ -1,0 +1,6 @@
+@ExternalService_HostAddress = http://localhost:5251
+
+GET {{ExternalService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
