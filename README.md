@@ -1,4 +1,4 @@
-# SmartAirport
+﻿# SmartAirport
 
 A microservices-based airport management system built with .NET 8.0.
 
@@ -54,21 +54,21 @@ Service for external system integrations.
 
 ```
 SmartAirport/
-??? FlightService/
-?   ??? Controllers/      # API endpoints
-?   ??? Data/            # Database context
-?   ??? DTOs/            # Data transfer objects
-?   ??? Models/          # Domain models
-?   ??? Services/        # Business logic
-?   ??? Middleware/      # Custom middleware
-?   ??? Program.cs       # Application entry point
-??? SensorService/
-?   ??? Controllers/
-?   ??? Models/
-?   ??? Services/
-?   ??? Program.cs
-??? ExternalService/
-    ??? Program.cs
+├── FlightService/
+│   ├── Controllers/      # API endpoints
+│   ├── Data/            # Database context
+│   ├── DTOs/            # Data transfer objects
+│   ├── Models/          # Domain models
+│   ├── Services/        # Business logic
+│   ├── Middleware/      # Custom middleware
+│   └── Program.cs       # Application entry point
+├── SensorService/
+│   ├── Controllers/
+│   ├── Models/
+│   ├── Services/
+│   └── Program.cs
+└── ExternalService/
+    └── Program.cs
 ```
 
 ## Getting Started
@@ -135,10 +135,6 @@ FlightService uses JWT Bearer token authentication. Include the token in the Aut
 Authorization: Bearer <your-jwt-token>
 ```
 
-## Docker Support
-
-Docker configuration is included for containerization of services.
-
 ## Development
 
 ### Configuration
@@ -157,4 +153,5 @@ This project is for educational purposes.
 
 ## Contributors
 
-- Ariano (IPCA - ISI TP2)
+- Arianna Cicero
+- Guilherme Souza
