@@ -182,8 +182,6 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# Note: Comment the next line if you want to checkin your web deploy settings,
-# but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
 
@@ -233,12 +231,7 @@ _pkginfo.txt
 ClientBin/
 ~$*
 *~
-*.dbmdl
-*.dbproj.schemaview
-*.jfm
-*.pfx
-*.publishsettings
-orleans.codegen.cs
+
 
 # Including strong name files can present a security risk
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
@@ -406,3 +399,53 @@ FodyWeavers.xsd
 # Log files
 logs/
 *.log
+
+# ===== SECURITY: DO NOT COMMIT THESE FILES =====
+
+# Environment-specific configuration with secrets
+appsettings.Local.json
+appsettings.*.local.json
+
+# Exclude main appsettings.json files that contain real credentials
+# Use appsettings.Template.json instead
+**/appsettings.json
+!**/appsettings.Template.json
+
+# But allow appsettings.Development.json and appsettings.Production.json 
+# (these should not contain secrets)
+!**/appsettings.Development.json
+!**/appsettings.Production.json
+
+# AWS Credentials
+.aws/
+aws-credentials.json
+
+# Database connection strings
+connectionstrings.json
+
+# Files with 'secret' in the name (but not .cs code files)
+*secret*.json
+*secret*.txt
+*secret*.xml
+*secret*.config
+*Secret*.json
+*Secret*.txt
+*Secret*.xml
+*Secret*.config
+*SECRET*.json
+*SECRET*.txt
+*SECRET*.xml
+*SECRET*.config
+
+# SSL Certificates and Keys
+*.pfx
+*.p12
+*.key
+*.pem
+*.crt
+*.cer
+
+# Environment variables
+.env
+.env.local
+.env.*.local
