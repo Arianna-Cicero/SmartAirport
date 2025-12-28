@@ -1,0 +1,11 @@
+{
+  "name": "smartairport-frontend",
+  "version": "1.0.0",
+  "description": "Smart Airport Frontend",
+  "scripts": {
+    "start": "npx serve -s -l 8080"
+  },
+  "dependencies": {
+    "serve": "^14.2.3"
+  }
+}

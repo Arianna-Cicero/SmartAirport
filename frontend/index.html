@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Airport</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✈️ Smart Airport</h1>
+            <div id="user-info" style="display: none;">
+                <span id="username"></span>
+                <button onclick="logout()" class="btn-secondary">Logout</button>
+            </div>
+        </header>
+
+        <!-- Login Section -->
+        <div id="login-section" class="section">
+            <h2>Login</h2>
+            <div class="form-group">
+                <input type="text" id="login-username" placeholder="Username" class="input">
+                <input type="password" id="login-password" placeholder="Password" class="input">
+                <button onclick="login()" class="btn-primary">Login</button>
+            </div>
+        </div>
+
+        <!-- Main Section -->
+        <div id="main-section" class="section" style="display: none;">
+            <nav class="tabs">
+                <button onclick="showTab('flights')" class="tab-btn active">Flights</button>
+                <button onclick="showTab('airports')" class="tab-btn">Airports</button>
+                <button onclick="showTab('airlines')" class="tab-btn">Airlines</button>
+                <button onclick="showTab('passengers')" class="tab-btn">Passengers</button>
+                <button onclick="showTab('weather')" class="tab-btn">Weather</button>
+                <button onclick="showTab('sensors')" class="tab-btn">Sensors</button>
+            </nav>
+
+            <!-- Flights Tab -->
+            <div id="flights-tab" class="tab-content active">
+                <h2>Flights</h2>
+                <div class="form-group">
+                    <input type="text" id="flight-no" placeholder="Flight Number (e.g., TP1234)" class="input">
+                    <input type="number" id="flight-from" placeholder="From Airport ID (check Airports tab)" class="input">
+                    <input type="number" id="flight-to" placeholder="To Airport ID (check Airports tab)" class="input">
+                    <input type="time" id="flight-departure" placeholder="Departure Time" class="input">
+                    <input type="time" id="flight-arrival" placeholder="Arrival Time" class="input">
+                    <input type="number" id="flight-airline" placeholder="Airline ID (check Airlines tab)" class="input">
+                    <input type="number" id="flight-airplane" placeholder="Airplane ID (must exist)" class="input">
+                    <button onclick="createFlight()" class="btn-primary">Add Flight</button>
+                </div>
+                <button onclick="loadFlights()" class="btn-primary">Refresh</button>
+                <div id="flights-list" class="data-list"></div>
+            </div>
+
+            <!-- Airports Tab -->
+            <div id="airports-tab" class="tab-content">
+                <h2>Airports</h2>
+                <div class="form-group">
+                    <input type="text" id="airport-iata" placeholder="IATA Code (3 chars, e.g., FAO)" class="input" maxlength="3">
+                    <input type="text" id="airport-icao" placeholder="ICAO Code (4 chars, e.g., LPFR)" class="input" maxlength="4">
+                    <input type="text" id="airport-name" placeholder="Airport Name" class="input" maxlength="50">
+                    <button onclick="createAirport()" class="btn-primary">Add Airport</button>
+                </div>
+                <button onclick="loadAirports()" class="btn-primary">Refresh</button>
+                <div id="airports-list" class="data-list"></div>
+            </div>
+
+            <!-- Airlines Tab -->
+            <div id="airlines-tab" class="tab-content">
+                <h2>Airlines</h2>
+                <div class="form-group">
+                    <input type="number" id="airline-id" placeholder="Airline ID (must be unique)" class="input">
+                    <input type="text" id="airline-iata" placeholder="IATA Code (e.g., TP)" class="input" maxlength="3">
+                    <input type="text" id="airline-name" placeholder="Airline Name" class="input">
+                    <input type="number" id="airline-base" placeholder="Base Airport ID" class="input">
+                    <button onclick="createAirline()" class="btn-primary">Add Airline</button>
+                </div>
+                <button onclick="loadAirlines()" class="btn-primary">Refresh</button>
+                <div id="airlines-list" class="data-list"></div>
+            </div>
+
+            <!-- Passengers Tab -->
+            <div id="passengers-tab" class="tab-content">
+                <h2>Passengers</h2>
+                <div class="form-group">
+                    <input type="text" id="passenger-firstname" placeholder="First Name" class="input">
+                    <input type="text" id="passenger-lastname" placeholder="Last Name" class="input">
+                    <input type="text" id="passenger-passport" placeholder="Passport No" class="input">
+                    <button onclick="createPassenger()" class="btn-primary">Add Passenger</button>
+                </div>
+                <button onclick="loadPassengers()" class="btn-primary">Refresh</button>
+                <div id="passengers-list" class="data-list"></div>
+            </div>
+
+            <!-- Weather Tab -->
+            <div id="weather-tab" class="tab-content">
+                <h2>Weather Information</h2>
+                <div class="form-group">
+                    <input type="text" id="weather-airport" placeholder="Airport Code (e.g., LIS, FAO, OPO)" class="input" maxlength="3">
+                    <button onclick="getWeather()" class="btn-primary">Get Weather</button>
+                </div>
+                <div id="weather-data" class="data-list"></div>
+            </div>
+
+            <!-- Sensors Tab -->
+            <div id="sensors-tab" class="tab-content">
+                <h2>Sensor Data</h2>
+                <div class="form-group">
+                    <input type="text" id="sensor-airport" placeholder="Airport Code (e.g., LIS)" class="input">
+                    <button onclick="loadSensorData()" class="btn-primary">Get Data</button>
+                </div>
+                <div id="sensor-data" class="data-list"></div>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
