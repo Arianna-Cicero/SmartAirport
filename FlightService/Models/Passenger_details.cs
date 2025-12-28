@@ -6,6 +6,8 @@ namespace AirportAPI.Models
     {
         [Key]
         public string passenger_id { get; set; }
+        public Passenger Passenger { get; set; } // Navigation property
+
         [Required]
         public DateTime birthdate{ get; set; }
         [Required]

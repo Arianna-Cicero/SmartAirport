@@ -6,10 +6,15 @@ namespace FlightService.Models
     {
         [Key]
         public int booking_id { get; set; }
+
         [Required]
         public int flight_id { get; set; }
+        public Flight Flight { get; set; }
+
         [Required]
         public int passenger_id { get; set; }
+        public Passenger Passenger { get; set; }
+
         [Required]
         [StringLength(4)]
         public string seat { get; set; }

@@ -17,5 +17,9 @@ namespace FlightService.Models
         public string airlinename { get; set; }
         [Required]
         public int base_airport { get; set; }
+        public Airport BaseAirport { get; set; }
+
+        public ICollection<Flight> Flights { get; set; }
+        public ICollection<Airplane> Airplanes { get; set; }
     }
 }

@@ -42,6 +42,33 @@ namespace FlightService.Data
             modelBuilder.Entity<AirportStaff>()
                 .HasIndex(e => e.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.FromAirport)
+                .WithMany()
+                .HasForeignKey(f => f.from)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.ToAirport)
+                .WithMany()
+                .HasForeignKey(f => f.to)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FlightSchedule>()
+                .HasOne(fs => fs.FromAirport)
+                .WithMany()
+                .HasForeignKey(fs => fs.from);
+
+            modelBuilder.Entity<FlightSchedule>()
+                .HasOne(fs => fs.ToAirport)
+                .WithMany()
+                .HasForeignKey(fs => fs.to);
+
+            modelBuilder.Entity<Passenger>()
+                .HasOne(p => p.PassengerDetails)
+                .WithOne(d => d.Passenger)
+                .HasForeignKey<Passenger_details>(d => d.passenger_id);
         }
     }
 }

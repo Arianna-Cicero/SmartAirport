@@ -15,5 +15,8 @@ namespace FlightService.Models
         [Required]  
         [StringLength(50)]
         public string name { get; set; }
+
+        public AirportGeo AirportGeo { get; set; }
+        public Airport_reachable AirportReachable { get; set; }
     }
 }
