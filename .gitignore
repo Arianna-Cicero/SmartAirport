@@ -430,3 +430,5 @@ connectionstrings.json
 .env
 .env.local
 .env.*.local
+
+*.zip
