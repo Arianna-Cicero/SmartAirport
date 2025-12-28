@@ -42,6 +42,115 @@ namespace FlightService.Data
             modelBuilder.Entity<AirportStaff>()
                 .HasIndex(e => e.Email)
                 .IsUnique();
+
+            // Airport relations (1:1 with same primary key)
+            modelBuilder.Entity<Airport>()
+                .HasOne(a => a.AirportGeo)
+                .WithOne()
+                .HasForeignKey<AirportGeo>(ag => ag.airport_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Airport>()
+                .HasOne(a => a.AirportReachable)
+                .WithOne()
+                .HasForeignKey<Airport_reachable>(ar => ar.airport_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Flight relations
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.FromAirport)
+                .WithMany()
+                .HasForeignKey(f => f.from)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.ToAirport)
+                .WithMany()
+                .HasForeignKey(f => f.to)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.Airline)
+                .WithMany(a => a.Flights)
+                .HasForeignKey(f => f.airline_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Flight>()
+                .HasOne(f => f.Airplane)
+                .WithMany()
+                .HasForeignKey(f => f.airplane_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // FlightSchedule relations
+            modelBuilder.Entity<FlightSchedule>()
+                .HasOne(fs => fs.FromAirport)
+                .WithMany()
+                .HasForeignKey(fs => fs.from)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FlightSchedule>()
+                .HasOne(fs => fs.ToAirport)
+                .WithMany()
+                .HasForeignKey(fs => fs.to)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FlightSchedule>()
+                .HasOne(fs => fs.Airline)
+                .WithMany()
+                .HasForeignKey(fs => fs.airline_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Passenger relations
+            modelBuilder.Entity<Passenger>()
+                .HasOne(p => p.PassengerDetails)
+                .WithOne(d => d.Passenger)
+                .HasForeignKey<Passenger_details>(d => d.passenger_id);
+
+            // Booking relations
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Flight)
+                .WithMany()
+                .HasForeignKey(b => b.flight_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Passenger)
+                .WithMany(p => p.Bookings)
+                .HasForeignKey(b => b.passenger_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Airplane relations
+            modelBuilder.Entity<Airplane>()
+                 .HasOne(a => a.Airline)
+                 .WithMany(al => al.Airplanes)
+                 .HasForeignKey(a => a.airline_id)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Airplane>()
+                .HasOne(a => a.AirplaneType)
+                .WithMany()
+                .HasForeignKey(a => a.type_id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Airline relations
+            modelBuilder.Entity<Airline>()
+                .HasOne(a => a.BaseAirport)
+                .WithMany()
+                .HasForeignKey(a => a.base_airport)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // AirportStaff relations
+            modelBuilder.Entity<AirportStaff>()
+                .HasOne(s => s.Airport)
+                .WithMany()
+                .HasForeignKey(s => s.AirportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AirportStaff>()
+                .HasOne(s => s.Airline)
+                .WithMany()
+                .HasForeignKey(s => s.AirlineId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

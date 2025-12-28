@@ -6,16 +6,24 @@ namespace FlightService.Models
     {
         [Key]
         public int flightno { get; set; }
+
         [Required]
         public int from { get; set; }
+        public Airport FromAirport { get; set; } // Navigation property
+
         [Required]
         public int to { get; set; }
+        public Airport ToAirport { get; set; } // Navigation property
+
         [Required]
         public DateTime departure { get; set; }
         [Required]
         public DateTime arrival { get; set; }
+
         [Required]
         public int airline_id { get; set; }
+        public Airline Airline { get; set; } // Navigation property
+
         [Required]
         public int monday { get; set; }
         [Required]

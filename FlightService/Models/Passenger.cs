@@ -6,6 +6,8 @@ namespace FlightService.Models
     {
         [Key]
         public int passenger_id { get; set; }
+        public Passenger_details PassengerDetails { get; set; } // Navigation property
+
         [Required]
         [StringLength(100)]
         public string firstname { get; set; }
@@ -15,5 +17,7 @@ namespace FlightService.Models
         [Required]
         [StringLength(9)]
         public string Passportno { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; } // Navigation property
     }
 }
