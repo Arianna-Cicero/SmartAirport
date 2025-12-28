@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirportAPI.Models
+namespace FlightService.Models
 {
     public class Airport_reachable
     {

@@ -35,7 +35,7 @@ namespace FlightService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     capacity = table.Column<int>(type: "integer", nullable: false),
                     type_id = table.Column<int>(type: "integer", nullable: false),
-                    airpline_id = table.Column<int>(type: "integer", nullable: false)
+                    airline_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

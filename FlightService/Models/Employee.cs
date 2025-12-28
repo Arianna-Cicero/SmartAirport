@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirportAPI.Models
+namespace FlightService.Models
 {
     public class Employee
     {
@@ -8,10 +8,10 @@ namespace AirportAPI.Models
         public int employee_id { get; set; }
         [Required]
         [StringLength(100)]
-        public int firstname { get; set; }
+        public string firstname { get; set; }
         [Required]
         [StringLength(100)]
-        public int lastname { get; set; }
+        public string lastname { get; set; }
         [Required]
         public DateTime birthdate { get; set; }
         [Required]

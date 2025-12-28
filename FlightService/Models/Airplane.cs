@@ -13,7 +13,7 @@ namespace FlightService.Models
         public int type_id { get; set; }
         public Airplane_type AirplaneType { get; set; }
         [Required]
-        public int airpline_id { get; set; }
+        public int airline_id { get; set; }
         public Airline Airline { get; set; }
 
     }

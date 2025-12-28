@@ -30,7 +30,7 @@ namespace FlightService.Controllers
                 AirplaneId = a.airplane_id,
                 Capacity = a.capacity,
                 TypeId = a.type_id,
-                AirplineId = a.airpline_id
+                AirlineId = a.airline_id
             }).ToList();
 
             return Ok(airplaneDtos);
@@ -52,7 +52,7 @@ namespace FlightService.Controllers
                 AirplaneId = airplane.airplane_id,
                 Capacity = airplane.capacity,
                 TypeId = airplane.type_id,
-                AirplineId = airplane.airpline_id
+                AirlineId = airplane.airline_id
             };
 
             return Ok(airplaneDto);
@@ -76,7 +76,7 @@ namespace FlightService.Controllers
                 AirplaneId = a.airplane_id,
                 Capacity = a.capacity,
                 TypeId = a.type_id,
-                AirplineId = a.airpline_id
+                AirlineId = a.airline_id
             }).ToList();
 
             return Ok(airplaneDtos);
@@ -87,7 +87,7 @@ namespace FlightService.Controllers
         public async Task<ActionResult<IEnumerable<AirplaneReadDto>>> GetAirplanesByAirline(int airlineId)
         {
             var airplanes = await _context.Airplanes
-                .Where(a => a.airpline_id == airlineId)
+                .Where(a => a.airline_id == airlineId)
                 .ToListAsync();
 
             if (airplanes == null || !airplanes.Any())
@@ -100,7 +100,7 @@ namespace FlightService.Controllers
                 AirplaneId = a.airplane_id,
                 Capacity = a.capacity,
                 TypeId = a.type_id,
-                AirplineId = a.airpline_id
+                AirlineId = a.airline_id
             }).ToList();
 
             return Ok(airplaneDtos);
@@ -114,7 +114,7 @@ namespace FlightService.Controllers
             {
                 capacity = airplaneCreateDto.Capacity,
                 type_id = airplaneCreateDto.TypeId,
-                airpline_id = airplaneCreateDto.AirplineId
+                airline_id = airplaneCreateDto.AirlineId
             };
 
             _context.Airplanes.Add(airplane);
@@ -125,7 +125,7 @@ namespace FlightService.Controllers
                 AirplaneId = airplane.airplane_id,
                 Capacity = airplane.capacity,
                 TypeId = airplane.type_id,
-                AirplineId = airplane.airpline_id
+                AirlineId = airplane.airline_id
             };
 
             return CreatedAtAction(nameof(GetAirplane), new { id = airplane.airplane_id }, airplaneDto);
@@ -144,7 +144,7 @@ namespace FlightService.Controllers
 
             airplane.capacity = airplaneUpdateDto.Capacity;
             airplane.type_id = airplaneUpdateDto.TypeId;
-            airplane.airpline_id = airplaneUpdateDto.AirplineId;
+            airplane.airline_id = airplaneUpdateDto.AirlineId;
 
             try
             {

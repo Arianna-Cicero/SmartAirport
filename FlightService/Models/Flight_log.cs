@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirportAPI.Models
+namespace FlightService.Models
 {
     public class Flight_log
     {
@@ -12,7 +12,7 @@ namespace AirportAPI.Models
         [StringLength(8)]
         public string flightno_old { get; set; }
         [StringLength(8)]
-        public int flightno_new { get; set; }
+        public string flightno_new { get; set; }
         public int from_old { get; set; }
         public int from_new { get; set; }
         public int to_old { get; set; }

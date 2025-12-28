@@ -45,6 +45,8 @@ namespace FlightService.Migrations
 
                     b.HasKey("airline_id");
 
+                    b.HasIndex("base_airport");
+
                     b.ToTable("Airlines");
                 });
 
@@ -56,7 +58,7 @@ namespace FlightService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("airplane_id"));
 
-                    b.Property<int>("airpline_id")
+                    b.Property<int>("airline_id")
                         .HasColumnType("integer");
 
                     b.Property<int>("capacity")
@@ -67,7 +69,33 @@ namespace FlightService.Migrations
 
                     b.HasKey("airplane_id");
 
+                    b.HasIndex("airline_id");
+
+                    b.HasIndex("type_id");
+
                     b.ToTable("Airplanes");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airplane_type", b =>
+                {
+                    b.Property<int>("type_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("type_id"));
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("identifier")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("type_id");
+
+                    b.ToTable("Airplane_type");
                 });
 
             modelBuilder.Entity("FlightService.Models.Airport", b =>
@@ -101,10 +129,7 @@ namespace FlightService.Migrations
             modelBuilder.Entity("FlightService.Models.AirportGeo", b =>
                 {
                     b.Property<int>("airport_id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("airport_id"));
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -227,6 +252,19 @@ namespace FlightService.Migrations
                     b.ToTable("AirportStaff");
                 });
 
+            modelBuilder.Entity("FlightService.Models.Airport_reachable", b =>
+                {
+                    b.Property<int>("airport_id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("hops")
+                        .HasColumnType("integer");
+
+                    b.HasKey("airport_id");
+
+                    b.ToTable("Airport_reachable");
+                });
+
             modelBuilder.Entity("FlightService.Models.Booking", b =>
                 {
                     b.Property<int>("booking_id")
@@ -250,6 +288,10 @@ namespace FlightService.Migrations
                         .HasColumnType("character varying(4)");
 
                     b.HasKey("booking_id");
+
+                    b.HasIndex("flight_id");
+
+                    b.HasIndex("passenger_id");
 
                     b.ToTable("Bookings");
                 });
@@ -286,6 +328,14 @@ namespace FlightService.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("flight_id");
+
+                    b.HasIndex("airline_id");
+
+                    b.HasIndex("airplane_id");
+
+                    b.HasIndex("from");
+
+                    b.HasIndex("to");
 
                     b.ToTable("Flights");
                 });
@@ -336,6 +386,12 @@ namespace FlightService.Migrations
 
                     b.HasKey("flightno");
 
+                    b.HasIndex("airline_id");
+
+                    b.HasIndex("from");
+
+                    b.HasIndex("to");
+
                     b.ToTable("FlightSchedules");
                 });
 
@@ -367,19 +423,231 @@ namespace FlightService.Migrations
                     b.ToTable("Passengers");
                 });
 
+            modelBuilder.Entity("FlightService.Models.Passenger_details", b =>
+                {
+                    b.Property<int>("passenger_id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("birthdate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("city")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("sex")
+                        .IsRequired()
+                        .HasMaxLength(1)
+                        .HasColumnType("character varying(1)");
+
+                    b.Property<string>("street")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("telephone")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("zip")
+                        .HasColumnType("integer");
+
+                    b.HasKey("passenger_id");
+
+                    b.ToTable("Passenger_details");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airline", b =>
+                {
+                    b.HasOne("FlightService.Models.Airport", "BaseAirport")
+                        .WithMany()
+                        .HasForeignKey("base_airport")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BaseAirport");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airplane", b =>
+                {
+                    b.HasOne("FlightService.Models.Airline", "Airline")
+                        .WithMany("Airplanes")
+                        .HasForeignKey("airline_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airplane_type", "AirplaneType")
+                        .WithMany()
+                        .HasForeignKey("type_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Airline");
+
+                    b.Navigation("AirplaneType");
+                });
+
+            modelBuilder.Entity("FlightService.Models.AirportGeo", b =>
+                {
+                    b.HasOne("FlightService.Models.Airport", null)
+                        .WithOne("AirportGeo")
+                        .HasForeignKey("FlightService.Models.AirportGeo", "airport_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FlightService.Models.AirportStaff", b =>
                 {
                     b.HasOne("FlightService.Models.Airline", "Airline")
                         .WithMany()
-                        .HasForeignKey("AirlineId");
+                        .HasForeignKey("AirlineId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FlightService.Models.Airport", "Airport")
                         .WithMany()
-                        .HasForeignKey("AirportId");
+                        .HasForeignKey("AirportId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Airline");
 
                     b.Navigation("Airport");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airport_reachable", b =>
+                {
+                    b.HasOne("FlightService.Models.Airport", null)
+                        .WithOne("AirportReachable")
+                        .HasForeignKey("FlightService.Models.Airport_reachable", "airport_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FlightService.Models.Booking", b =>
+                {
+                    b.HasOne("FlightService.Models.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("flight_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Passenger", "Passenger")
+                        .WithMany("Bookings")
+                        .HasForeignKey("passenger_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+
+                    b.Navigation("Passenger");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Flight", b =>
+                {
+                    b.HasOne("FlightService.Models.Airline", "Airline")
+                        .WithMany("Flights")
+                        .HasForeignKey("airline_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airplane", "Airplane")
+                        .WithMany()
+                        .HasForeignKey("airplane_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airport", "FromAirport")
+                        .WithMany()
+                        .HasForeignKey("from")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airport", "ToAirport")
+                        .WithMany()
+                        .HasForeignKey("to")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Airline");
+
+                    b.Navigation("Airplane");
+
+                    b.Navigation("FromAirport");
+
+                    b.Navigation("ToAirport");
+                });
+
+            modelBuilder.Entity("FlightService.Models.FlightSchedule", b =>
+                {
+                    b.HasOne("FlightService.Models.Airline", "Airline")
+                        .WithMany()
+                        .HasForeignKey("airline_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airport", "FromAirport")
+                        .WithMany()
+                        .HasForeignKey("from")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FlightService.Models.Airport", "ToAirport")
+                        .WithMany()
+                        .HasForeignKey("to")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Airline");
+
+                    b.Navigation("FromAirport");
+
+                    b.Navigation("ToAirport");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Passenger_details", b =>
+                {
+                    b.HasOne("FlightService.Models.Passenger", "Passenger")
+                        .WithOne("PassengerDetails")
+                        .HasForeignKey("FlightService.Models.Passenger_details", "passenger_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Passenger");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airline", b =>
+                {
+                    b.Navigation("Airplanes");
+
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("FlightService.Models.Airport", b =>
+                {
+                    b.Navigation("AirportGeo")
+                        .IsRequired();
+
+                    b.Navigation("AirportReachable")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FlightService.Models.Passenger", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("PassengerDetails")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

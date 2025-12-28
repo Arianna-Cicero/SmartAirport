@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AirportAPI.Models
+namespace FlightService.Models
 {
     public class Passenger_details
     {
         [Key]
-        public string passenger_id { get; set; }
+        public int passenger_id { get; set; }
         public Passenger Passenger { get; set; } // Navigation property
 
         [Required]

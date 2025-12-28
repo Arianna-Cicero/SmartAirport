@@ -59,7 +59,7 @@ namespace FlightService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("airplane_id"));
 
-                    b.Property<int>("airpline_id")
+                    b.Property<int>("airline_id")
                         .HasColumnType("integer");
 
                     b.Property<int>("capacity")
