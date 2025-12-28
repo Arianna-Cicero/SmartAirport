@@ -7,7 +7,7 @@ namespace FlightService.Services
 {
     public interface ITokenService
     {
-        string GenerateToken(string username, string[] roles);
+        string GenerateToken(string username, string[] roles, Dictionary<string, string>? additionalClaims = null);
     }
 
     public class TokenService : ITokenService
@@ -19,7 +19,7 @@ namespace FlightService.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(string username, string[] roles)
+        public string GenerateToken(string username, string[] roles, Dictionary<string, string>? additionalClaims = null)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
@@ -36,9 +36,19 @@ namespace FlightService.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
+            // Add roles
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            // Add additional custom claims
+            if (additionalClaims != null)
+            {
+                foreach (var claim in additionalClaims)
+                {
+                    claims.Add(new Claim(claim.Key, claim.Value));
+                }
             }
 
             var token = new JwtSecurityToken(

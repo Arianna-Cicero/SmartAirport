@@ -406,16 +406,6 @@ logs/
 appsettings.Local.json
 appsettings.*.local.json
 
-# Exclude main appsettings.json files that contain real credentials
-# Use appsettings.Template.json instead
-**/appsettings.json
-!**/appsettings.Template.json
-
-# But allow appsettings.Development.json and appsettings.Production.json 
-# (these should not contain secrets)
-!**/appsettings.Development.json
-!**/appsettings.Production.json
-
 # AWS Credentials
 .aws/
 aws-credentials.json
@@ -423,19 +413,10 @@ aws-credentials.json
 # Database connection strings
 connectionstrings.json
 
-# Files with 'secret' in the name (but not .cs code files)
-*secret*.json
-*secret*.txt
-*secret*.xml
-*secret*.config
-*Secret*.json
-*Secret*.txt
-*Secret*.xml
-*Secret*.config
-*SECRET*.json
-*SECRET*.txt
-*SECRET*.xml
-*SECRET*.config
+# Any file with 'secret' in the name
+*secret*
+*Secret*
+*SECRET*
 
 # SSL Certificates and Keys
 *.pfx

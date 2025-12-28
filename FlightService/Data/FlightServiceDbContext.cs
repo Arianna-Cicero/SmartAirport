@@ -17,6 +17,7 @@ namespace FlightService.Data
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<AirportStaff> AirportStaff { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +32,16 @@ namespace FlightService.Data
             modelBuilder.Entity<Passenger>().HasKey(e => e.passenger_id);
             modelBuilder.Entity<Airport>().HasKey(e => e.airport_id);
             modelBuilder.Entity<AirportGeo>().HasKey(e => e.airport_id);
+            modelBuilder.Entity<AirportStaff>().HasKey(e => e.StaffId);
+
+            // Indexes for better performance
+            modelBuilder.Entity<AirportStaff>()
+                .HasIndex(e => e.Username)
+                .IsUnique();
+            
+            modelBuilder.Entity<AirportStaff>()
+                .HasIndex(e => e.Email)
+                .IsUnique();
         }
     }
 }

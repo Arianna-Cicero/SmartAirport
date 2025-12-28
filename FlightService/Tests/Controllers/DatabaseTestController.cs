@@ -19,14 +19,6 @@ public class DatabaseTestController : ControllerBase
         _context = context;
         _logger = logger;
     }
-#else
-[ApiExplorerSettings(IgnoreApi = true)]
-public class DatabaseTestController : ControllerBase
-{
-    public DatabaseTestController()
-    {
-    }
-#endif
 
     /// <summary>
     /// Test database connection with detailed diagnostics
@@ -216,3 +208,4 @@ public class DatabaseTestController : ControllerBase
         return string.Join("; ", sanitized);
     }
 }
+#endif

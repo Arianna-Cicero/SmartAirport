@@ -27,7 +27,7 @@ namespace FlightService.Controllers
             
             var airportDtos = airports.Select(a => new AirportReadDto
             {
-                AirportId = (short)a.airport_id,
+                AirportId = a.airport_id,
                 Iata = a.iata,
                 Icao = a.icao,
                 Name = a.name
@@ -38,7 +38,7 @@ namespace FlightService.Controllers
 
         // GET: api/airports/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<AirportReadDto>> GetAirport(short id)
+        public async Task<ActionResult<AirportReadDto>> GetAirport(int id)
         {
             var airport = await _context.Airports.FindAsync(id);
 
@@ -49,7 +49,7 @@ namespace FlightService.Controllers
 
             var airportDto = new AirportReadDto
             {
-                AirportId = (short)airport.airport_id,
+                AirportId = airport.airport_id,
                 Iata = airport.iata,
                 Icao = airport.icao,
                 Name = airport.name
@@ -72,7 +72,7 @@ namespace FlightService.Controllers
 
             var airportDto = new AirportReadDto
             {
-                AirportId = (short)airport.airport_id,
+                AirportId = airport.airport_id,
                 Iata = airport.iata,
                 Icao = airport.icao,
                 Name = airport.name
@@ -97,7 +97,7 @@ namespace FlightService.Controllers
 
             var airportDto = new AirportReadDto
             {
-                AirportId = (short)airport.airport_id,
+                AirportId = airport.airport_id,
                 Iata = airport.iata,
                 Icao = airport.icao,
                 Name = airport.name
@@ -108,7 +108,7 @@ namespace FlightService.Controllers
 
         // PUT: api/airports/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAirport(short id, AirportUpdateDto airportUpdateDto)
+        public async Task<IActionResult> UpdateAirport(int id, AirportUpdateDto airportUpdateDto)
         {
             var airport = await _context.Airports.FindAsync(id);
 
@@ -139,7 +139,7 @@ namespace FlightService.Controllers
 
         // DELETE: api/airports/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAirport(short id)
+        public async Task<IActionResult> DeleteAirport(int id)
         {
             var airport = await _context.Airports.FindAsync(id);
 
@@ -154,7 +154,7 @@ namespace FlightService.Controllers
             return NoContent();
         }
 
-        private async Task<bool> AirportExists(short id)
+        private async Task<bool> AirportExists(int id)
         {
             return await _context.Airports.AnyAsync(e => e.airport_id == id);
         }

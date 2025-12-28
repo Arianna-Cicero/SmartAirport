@@ -184,6 +184,22 @@ try
 
     var app = builder.Build();
 
+    // Seed database with initial staff
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<FlightServiceDbContext>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            await DbInitializer.SeedData(context, logger);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "An error occurred while seeding the database");
+        }
+    }
+
     // Global Exception Handling Middleware
     app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
